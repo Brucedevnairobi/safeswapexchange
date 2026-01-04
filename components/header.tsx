@@ -4,9 +4,11 @@ import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Shield } from "lucide-react"
+import { UserNav } from "./user-nav"
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const isSignedIn = true
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -40,10 +42,16 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <Button variant="ghost" size="sm">
-            Sign In
-          </Button>
-          <Button size="sm">Get Started</Button>
+          {isSignedIn ? (
+            <UserNav />
+          ) : (
+            <>
+              <Button variant="ghost" size="sm">
+                Sign In
+              </Button>
+              <Button size="sm">Get Started</Button>
+            </>
+          )}
         </div>
 
         <button className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu">
