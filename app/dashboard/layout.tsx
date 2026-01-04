@@ -16,6 +16,7 @@ import {
   Bell,
   Search,
   ChevronDown,
+  User,
 } from "lucide-react"
 import {
   Sidebar,
@@ -58,6 +59,11 @@ const navItems = [
     href: "/dashboard",
   },
   {
+    title: "Profile",
+    icon: User,
+    href: "/dashboard/profile",
+  },
+  {
     title: "Transactions",
     icon: ArrowLeftRight,
     href: "/dashboard/transactions",
@@ -78,9 +84,9 @@ const navItems = [
     href: "/dashboard/settings",
   },
   {
-    title: "Support",
+    title: "Help Center",
     icon: HelpCircle,
-    href: "/dashboard/support",
+    href: "/dashboard/help",
   },
 ]
 

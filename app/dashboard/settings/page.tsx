@@ -1,247 +1,246 @@
 "use client"
 
+import { useState, Suspense } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import { User, Mail, Phone, MapPin, Building, CreditCard, Shield, Bell, Plus } from "lucide-react"
 import { Switch } from "@/components/ui/switch"
+import { Search, ChevronRight, Shield, Bell, CreditCard, User, Mail, Smartphone, Globe, Copy, Key } from "lucide-react"
+import { cn } from "@/lib/utils"
 
-export default function SettingsPage() {
-  // Mock user data
-  const user = {
-    name: "John Doe",
-    email: "john@safeswap.com",
-    phone: "+254 712 345 678",
-    location: "Nairobi, Kenya",
-    company: "Tech Ventures Ltd",
-    joined: "January 2024",
-    verified: true,
-    totalTransactions: 8,
-    totalVolume: "KES 5,634,500",
-  }
+// implementing a vertical tabbed layout with deep-dark aesthetics and card-based sections
+
+const SETTINGS_TABS = [
+  { id: "general", label: "General", icon: User },
+  { id: "security", label: "Security", icon: Shield },
+  { id: "notifications", label: "Notifications", icon: Bell },
+  { id: "billing", label: "Billing", icon: CreditCard },
+  { id: "verification", label: "Verification", icon: Shield },
+  { id: "api", label: "API Keys", icon: Key },
+]
+
+function SettingsContent() {
+  const [activeTab, setActiveTab] = useState("general")
 
   return (
-    <div className="space-y-6">
-      {/* Page Header */}
-      <div className="space-y-1">
-        <h1 className="font-poppins text-3xl font-bold text-foreground">Account Settings</h1>
-        <p className="text-muted-foreground">Manage your account details and preferences</p>
-      </div>
-
-      {/* Account Summary Card */}
-      <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
-        <CardHeader>
-          <div className="flex items-start justify-between">
-            <div className="flex items-center gap-4">
-              <Avatar className="h-20 w-20">
-                <AvatarImage src="/placeholder.svg" alt={user.name} />
-                <AvatarFallback className="bg-primary text-primary-foreground text-lg">
-                  {user.name
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")
-                    .toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <h2 className="font-poppins text-2xl font-bold text-foreground">{user.name}</h2>
-                  {user.verified && (
-                    <Badge className="bg-green-500/10 text-green-700 dark:text-green-400">
-                      <Shield className="mr-1 h-3 w-3" />
-                      Verified
-                    </Badge>
-                  )}
-                </div>
-                <p className="text-sm text-muted-foreground">Member since {user.joined}</p>
-              </div>
-            </div>
-            <Button variant="outline">Edit Profile</Button>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-6 md:grid-cols-3">
-            <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Total Transactions</p>
-              <p className="text-2xl font-bold text-foreground">{user.totalTransactions}</p>
-            </div>
-            <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Total Volume</p>
-              <p className="text-2xl font-bold text-foreground">{user.totalVolume}</p>
-            </div>
-            <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Account Status</p>
-              <Badge variant="outline" className="text-green-600 dark:text-green-400">
-                Active & Verified
-              </Badge>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      <div className="grid gap-6 md:grid-cols-2">
-        {/* Personal Information */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <User className="h-5 w-5 text-primary" />
-              Personal Information
-            </CardTitle>
-            <CardDescription>Update your personal details</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
-              <Input id="name" defaultValue={user.name} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="email" className="flex items-center gap-2">
-                <Mail className="h-4 w-4" />
-                Email Address
-              </Label>
-              <Input id="email" type="email" defaultValue={user.email} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="phone" className="flex items-center gap-2">
-                <Phone className="h-4 w-4" />
-                Phone Number
-              </Label>
-              <Input id="phone" type="tel" defaultValue={user.phone} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="location" className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" />
-                Location
-              </Label>
-              <Input id="location" defaultValue={user.location} />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="company" className="flex items-center gap-2">
-                <Building className="h-4 w-4" />
-                Company (Optional)
-              </Label>
-              <Input id="company" defaultValue={user.company} />
-            </div>
-            <Button className="w-full">Save Changes</Button>
-          </CardContent>
-        </Card>
-
-        {/* Security & Payment */}
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Shield className="h-5 w-5 text-primary" />
-                Security
-              </CardTitle>
-              <CardDescription>Manage your account security</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="current-password">Current Password</Label>
-                <Input id="current-password" type="password" placeholder="••••••••" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="new-password">New Password</Label>
-                <Input id="new-password" type="password" placeholder="••••••••" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="confirm-password">Confirm New Password</Label>
-                <Input id="confirm-password" type="password" placeholder="••••••••" />
-              </div>
-              <Button className="w-full bg-transparent" variant="outline">
-                Update Password
-              </Button>
-              <Separator />
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <Label className="text-sm font-medium">Two-Factor Authentication</Label>
-                  <p className="text-xs text-muted-foreground">Add an extra layer of security</p>
-                </div>
-                <Switch />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <CreditCard className="h-5 w-5 text-primary" />
-                Payment Methods
-              </CardTitle>
-              <CardDescription>Manage your payment options</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="rounded-lg border border-border p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                      <CreditCard className="h-5 w-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-foreground">M-Pesa</p>
-                      <p className="text-sm text-muted-foreground">•••• 5678</p>
-                    </div>
-                  </div>
-                  <Badge variant="secondary">Primary</Badge>
-                </div>
-              </div>
-              <Button className="w-full bg-transparent" variant="outline">
-                <Plus className="mr-2 h-4 w-4" />
-                Add Payment Method
-              </Button>
-            </CardContent>
-          </Card>
+    <div className="mx-auto max-w-[1200px] space-y-8 py-4">
+      <div className="flex flex-col gap-2">
+        <h1 className="font-poppins text-3xl font-bold tracking-tight">Account Settings</h1>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <span>Safeswap</span>
+          <ChevronRight className="h-4 w-4" />
+          <span className="text-foreground">Settings</span>
         </div>
       </div>
 
-      {/* Notifications */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Bell className="h-5 w-5 text-primary" />
-            Notification Preferences
-          </CardTitle>
-          <CardDescription>Choose what updates you want to receive</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              <Label className="text-sm font-medium">Transaction Updates</Label>
-              <p className="text-xs text-muted-foreground">Get notified about transaction status changes</p>
-            </div>
-            <Switch defaultChecked />
+      <div className="grid gap-12 lg:grid-cols-[240px,1fr]">
+        {/* Sidebar Navigation */}
+        <aside className="space-y-6">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input className="bg-muted/50 pl-9" placeholder="Search..." />
           </div>
-          <Separator />
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              <Label className="text-sm font-medium">Email Notifications</Label>
-              <p className="text-xs text-muted-foreground">Receive email updates for important events</p>
+
+          <nav className="space-y-1">
+            {SETTINGS_TABS.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={cn(
+                  "flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                  activeTab === tab.id
+                    ? "bg-accent text-accent-foreground"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                )}
+              >
+                <tab.icon className="h-4 w-4" />
+                {tab.label}
+              </button>
+            ))}
+          </nav>
+        </aside>
+
+        {/* Settings Content */}
+        <main className="space-y-8">
+          {activeTab === "general" && (
+            <div className="space-y-6 animate-in fade-in duration-500">
+              <Card className="bg-card">
+                <CardHeader>
+                  <CardTitle>Display Name</CardTitle>
+                  <CardDescription>Used to identify your account across the dashboard and in emails.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <Input defaultValue="John Doe" className="max-w-md bg-background" />
+                  <Separator className="my-4" />
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">
+                      Learn more about{" "}
+                      <span className="text-primary hover:underline cursor-pointer">Display Names</span>
+                    </span>
+                    <Button size="sm">Save</Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-card">
+                <CardHeader>
+                  <CardTitle>Account ID</CardTitle>
+                  <CardDescription>Used when interacting with the Safeswap API.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex max-w-md items-center gap-2">
+                    <code className="flex-1 rounded border border-border bg-muted/50 px-3 py-2 font-mono text-sm">
+                      usr_NWgN5Qzi9M7jSxFiFoOuwSJTTwtF
+                    </code>
+                    <Button variant="outline" size="icon">
+                      <Copy className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
-            <Switch defaultChecked />
-          </div>
-          <Separator />
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              <Label className="text-sm font-medium">SMS Notifications</Label>
-              <p className="text-xs text-muted-foreground">Get SMS alerts for critical updates</p>
+          )}
+
+          {activeTab === "security" && (
+            <div className="space-y-6 animate-in slide-in-from-bottom-2 duration-500">
+              <Card className="bg-card">
+                <CardHeader>
+                  <CardTitle>Two-Factor Authentication</CardTitle>
+                  <CardDescription>Protect your account with an extra layer of security.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="flex items-center justify-between rounded-lg border border-border p-4 bg-muted/30">
+                    <div className="space-y-1">
+                      <p className="font-medium">Authenticator App</p>
+                      <p className="text-sm text-muted-foreground">Secure your account using a TOTP app.</p>
+                    </div>
+                    <Button variant="outline">Configure</Button>
+                  </div>
+
+                  <Separator />
+
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <Label className="text-base">SMS Recovery</Label>
+                      <p className="text-sm text-muted-foreground">
+                        Use your phone to recover access if you lose your MFA device.
+                      </p>
+                    </div>
+                    <Switch />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-destructive/50 bg-destructive/5">
+                <CardHeader>
+                  <CardTitle className="text-destructive">Delete Account</CardTitle>
+                  <CardDescription>
+                    Permanently delete your account and all associated data. This action is irreversible.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Button variant="destructive">Delete Project</Button>
+                </CardContent>
+              </Card>
             </div>
-            <Switch />
-          </div>
-          <Separator />
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              <Label className="text-sm font-medium">Marketing Communications</Label>
-              <p className="text-xs text-muted-foreground">Receive tips, offers, and product updates</p>
+          )}
+
+          {activeTab === "notifications" && (
+            <Card className="bg-card animate-in fade-in duration-500">
+              <CardHeader>
+                <CardTitle>Notification Channels</CardTitle>
+                <CardDescription>Choose how you want to be alerted about transaction events.</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {[
+                  { title: "Email Notifications", desc: "Receive updates via your primary email address.", icon: Mail },
+                  {
+                    title: "Push Notifications",
+                    desc: "Get browser alerts for real-time status changes.",
+                    icon: Globe,
+                  },
+                  { title: "SMS Alerts", desc: "Urgent notifications sent directly to your phone.", icon: Smartphone },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start justify-between gap-4">
+                    <div className="flex gap-3">
+                      <div className="mt-1 rounded-md bg-muted p-2">
+                        <item.icon className="h-4 w-4 text-primary" />
+                      </div>
+                      <div className="space-y-1">
+                        <p className="font-medium leading-none">{item.title}</p>
+                        <p className="text-sm text-muted-foreground">{item.desc}</p>
+                      </div>
+                    </div>
+                    <Switch defaultChecked={i === 0} />
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          )}
+
+          {activeTab === "billing" && (
+            <div className="space-y-6 animate-in fade-in duration-500">
+              <Card className="bg-card border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle>Current Plan</CardTitle>
+                    <Badge className="bg-primary text-primary-foreground">Enterprise</Badge>
+                  </div>
+                  <CardDescription>Your current subscription and usage metrics.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="rounded-md border border-border bg-muted/50 p-4">
+                      <p className="text-xs text-muted-foreground uppercase tracking-wider">Credits Remaining</p>
+                      <p className="text-2xl font-bold">12,450</p>
+                    </div>
+                    <div className="rounded-md border border-border bg-muted/50 p-4">
+                      <p className="text-xs text-muted-foreground uppercase tracking-wider">Next Invoice</p>
+                      <p className="text-2xl font-bold">KES 4,500</p>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-transparent" variant="outline">
+                    Upgrade Plan
+                  </Button>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Payment Method</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex items-center justify-between rounded-md border border-border p-4">
+                    <div className="flex items-center gap-3">
+                      <div className="rounded bg-muted p-2">
+                        <CreditCard className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="font-medium">M-Pesa Account</p>
+                        <p className="text-sm text-muted-foreground">•••• 5678</p>
+                      </div>
+                    </div>
+                    <Button variant="ghost" size="sm">
+                      Manage
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
-            <Switch />
-          </div>
-        </CardContent>
-      </Card>
+          )}
+        </main>
+      </div>
     </div>
+  )
+}
+
+export default function SettingsPage() {
+  return (
+    <Suspense fallback={null}>
+      <SettingsContent />
+    </Suspense>
   )
 }
