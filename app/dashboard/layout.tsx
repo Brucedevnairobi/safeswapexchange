@@ -190,7 +190,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       <SidebarInset>
         {/* Top Bar */}
-        <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b border-border bg-background px-4 md:px-6">
+        <header className="sticky top-0 z-40 flex h-16 items-center gap-4 border-b border-border bg-background px-4 md:px-6">
           <SidebarTrigger />
           <Separator orientation="vertical" className="h-6" />
 
