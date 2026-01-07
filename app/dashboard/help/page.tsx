@@ -32,8 +32,6 @@ export default function HelpCenterPage() {
           Find answers to frequently asked questions or get in touch with our support team.
         </p>
         <div className="relative max-w-xl mx-auto pt-4">
-          <Search className="absolute left-3 top-[calc(1rem+1.25rem)] h-5 w-5 text-muted-foreground" />
-          <Input className="h-12 bg-muted/50 pl-11 text-lg rounded-xl" placeholder="Search for help articles..." />
         </div>
       </div>
 

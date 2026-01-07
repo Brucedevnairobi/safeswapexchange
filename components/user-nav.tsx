@@ -76,18 +76,6 @@ export function UserNav({ user }: UserNavProps) {
               <span>Dashboard</span>
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <History className="mr-2 h-4 w-4" />
-            <span>Transaction History</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <HelpCircle className="mr-2 h-4 w-4" />
-            <span>Help Center</span>
-          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive" onClick={handleLogout}>
