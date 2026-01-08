@@ -1,4 +1,3 @@
-'use client'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { DollarSign, ArrowUpRight, Clock, CheckCircle, AlertCircle, TrendingUp, Plus, HelpCircle } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
@@ -116,19 +115,19 @@ export default function DashboardPage() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 md:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => {
           const Icon = stat.icon
           return (
-            <Card key={stat.title}>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">{stat.title}</CardTitle>
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
-                  <Icon className="h-5 w-5 text-primary" />
+            <Card key={stat.title} className="bg-card/50">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-4 py-3 md:px-6 md:py-4">
+                <CardTitle className="text-xs md:text-sm font-medium text-muted-foreground">{stat.title}</CardTitle>
+                <div className="flex h-8 w-8 md:h-9 md:w-9 items-center justify-center rounded-lg bg-primary/10">
+                  <Icon className="h-4 w-4 md:h-5 md:w-5 text-primary" />
                 </div>
               </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-foreground">{stat.value}</div>
+              <CardContent className="px-4 py-2 md:px-6 md:py-3">
+                <div className="text-xl md:text-2xl font-bold text-foreground">{stat.value}</div>
                 <div className="mt-1 flex items-center gap-1 text-xs">
                   <span className="text-green-600 dark:text-green-400">{stat.change}</span>
                   <span className="text-muted-foreground">from last month</span>
@@ -141,11 +140,13 @@ export default function DashboardPage() {
       </div>
 
       {/* Charts Section */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        <Card className="col-span-4">
-          <CardHeader>
-            <CardTitle>Transaction Volume</CardTitle>
-            <CardDescription>Monthly growth in total transaction value (KES)</CardDescription>
+      <div className="grid gap-3 md:gap-4 grid-cols-1 lg:grid-cols-7">
+        <Card className="lg:col-span-4 bg-card/50">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base md:text-lg">Transaction Volume</CardTitle>
+            <CardDescription className="text-xs md:text-sm">
+              Monthly growth in total transaction value (KES)
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <ChartContainer
@@ -155,7 +156,7 @@ export default function DashboardPage() {
                   color: "var(--primary)",
                 },
               }}
-              className="h-[300px] w-full"
+              className="h-[250px] md:h-[300px] w-full"
             >
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={volumeData}>
@@ -175,10 +176,10 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="col-span-3">
-          <CardHeader>
-            <CardTitle>Category Distribution</CardTitle>
-            <CardDescription>Breakdown of transactions by type</CardDescription>
+        <Card className="lg:col-span-3 bg-card/50">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base md:text-lg">Category Distribution</CardTitle>
+            <CardDescription className="text-xs md:text-sm">Breakdown of transactions by type</CardDescription>
           </CardHeader>
           <CardContent>
             <ChartContainer
@@ -187,7 +188,7 @@ export default function DashboardPage() {
                   label: "Percentage",
                 },
               }}
-              className="h-[300px] w-full"
+              className="h-[250px] md:h-[300px] w-full"
             >
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -211,7 +212,7 @@ export default function DashboardPage() {
             <div className="mt-4 grid grid-cols-2 gap-2">
               {categoryData.map((item) => (
                 <div key={item.name} className="flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full" style={{ backgroundColor: item.color }} />
+                  <div className="h-2 w-2 md:h-3 md:w-3 rounded-full" style={{ backgroundColor: item.color }} />
                   <span className="text-xs text-muted-foreground">
                     {item.name} ({item.value}%)
                   </span>
@@ -223,41 +224,41 @@ export default function DashboardPage() {
       </div>
 
       {/* Recent Transactions */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
+      <Card className="bg-card/50">
+        <CardHeader className="flex-col gap-2 space-y-0 pb-3">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
             <div className="space-y-1">
-              <CardTitle>Recent Transactions</CardTitle>
-              <p className="text-sm text-muted-foreground">Your latest escrow activities</p>
+              <CardTitle className="text-base md:text-lg">Recent Transactions</CardTitle>
+              <p className="text-xs md:text-sm text-muted-foreground">Your latest escrow activities</p>
             </div>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="text-xs md:text-sm w-full md:w-auto bg-transparent">
               View All
-              <ArrowUpRight className="ml-1 h-4 w-4" />
+              <ArrowUpRight className="ml-1 h-3 w-3 md:h-4 md:w-4" />
             </Button>
           </div>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="space-y-3 md:space-y-4">
             {recentTransactions.map((transaction) => (
               <div
                 key={transaction.id}
-                className="flex items-center justify-between rounded-lg border border-border p-4 transition-colors hover:bg-muted/50"
+                className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 rounded-lg border border-border p-3 md:p-4 transition-colors hover:bg-muted/50"
               >
-                <div className="flex-1 space-y-1">
-                  <div className="flex items-center gap-2">
-                    <p className="font-medium text-foreground">{transaction.item}</p>
-                    <Badge variant="secondary" className="text-xs">
+                <div className="flex-1 space-y-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <p className="font-medium text-sm md:text-base text-foreground truncate">{transaction.item}</p>
+                    <Badge variant="secondary" className="text-xs flex-shrink-0">
                       {transaction.party}
                     </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground">{transaction.id}</p>
+                  <p className="text-xs md:text-sm text-muted-foreground">{transaction.id}</p>
                 </div>
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-3 md:gap-6">
                   <div className="text-right">
-                    <p className="font-semibold text-foreground">{transaction.amount}</p>
+                    <p className="font-semibold text-sm md:text-base text-foreground">{transaction.amount}</p>
                     <p className="text-xs text-muted-foreground">{transaction.date}</p>
                   </div>
-                  <div className="min-w-[100px] text-right">{getStatusBadge(transaction.status)}</div>
+                  <div className="min-w-[80px] md:min-w-[100px] text-right">{getStatusBadge(transaction.status)}</div>
                 </div>
               </div>
             ))}
@@ -266,40 +267,40 @@ export default function DashboardPage() {
       </Card>
 
       {/* Quick Actions */}
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card className="cursor-pointer transition-all hover:shadow-md">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base">
-              <Plus className="h-5 w-5 text-primary" />
+      <div className="grid gap-3 md:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <Card className="cursor-pointer transition-all hover:shadow-md bg-card/50">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-sm md:text-base">
+              <Plus className="h-4 w-4 md:h-5 md:w-5 text-primary" />
               Start New Transaction
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">Create a new secure escrow transaction</p>
+            <p className="text-xs md:text-sm text-muted-foreground">Create a new secure escrow transaction</p>
           </CardContent>
         </Card>
 
-        <Card className="cursor-pointer transition-all hover:shadow-md">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base">
-              <AlertCircle className="h-5 w-5 text-primary" />
+        <Card className="cursor-pointer transition-all hover:shadow-md bg-card/50">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-sm md:text-base">
+              <AlertCircle className="h-4 w-4 md:h-5 md:w-5 text-primary" />
               Pending Actions
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">3 transactions require your attention</p>
+            <p className="text-xs md:text-sm text-muted-foreground">3 transactions require your attention</p>
           </CardContent>
         </Card>
 
-        <Card className="cursor-pointer transition-all hover:shadow-md">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base">
-              <HelpCircle className="h-5 w-5 text-primary" />
+        <Card className="cursor-pointer transition-all hover:shadow-md bg-card/50 md:col-span-2 lg:col-span-1">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-sm md:text-base">
+              <HelpCircle className="h-4 w-4 md:h-5 md:w-5 text-primary" />
               Need Help?
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">Contact support or view help docs</p>
+            <p className="text-xs md:text-sm text-muted-foreground">Contact support or view help docs</p>
           </CardContent>
         </Card>
       </div>

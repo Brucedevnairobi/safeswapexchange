@@ -190,21 +190,27 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       <SidebarInset>
         {/* Top Bar */}
-        <header className="sticky top-0 z-40 flex h-16 items-center gap-4 border-b border-border bg-background px-4 md:px-6">
-          <SidebarTrigger />
-          <Separator orientation="vertical" className="h-6" />
+        <header className="sticky top-0 z-40 flex h-14 md:h-16 items-center gap-2 md:gap-4 border-b border-border bg-background px-3 md:px-6">
+          <SidebarTrigger className="h-5 w-5 md:h-6 md:w-6" />
+          <Separator orientation="vertical" className="h-5 md:h-6" />
 
-          <div className="flex w-full items-center justify-between gap-4">
-            <div className="flex-1 max-w-md">
-              <div className="relative">
+          <div className="flex w-full items-center justify-between gap-2 md:gap-4">
+            <div className="hidden md:flex flex-1 max-w-md">
+              <div className="relative w-full">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input type="search" placeholder="Search transactions..." className="w-full bg-muted/50 pl-8" />
+                <Input type="search" placeholder="Search..." className="w-full bg-muted/50 pl-8 text-sm" />
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <Button variant="ghost" size="icon" className="relative">
-                <Bell className="h-5 w-5" />
+            <div className="md:hidden flex-1 flex justify-center">
+              <Button variant="ghost" size="icon" className="h-9 w-9">
+                <Search className="h-4 w-4" />
+              </Button>
+            </div>
+
+            <div className="flex items-center gap-1 md:gap-2">
+              <Button variant="ghost" size="icon" className="h-9 w-9 md:h-10 md:w-10 relative">
+                <Bell className="h-4 w-4 md:h-5 md:w-5" />
                 <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-destructive" />
               </Button>
               <UserNav />
@@ -213,7 +219,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 p-4 md:p-6">
+        <main className="flex-1 p-3 md:p-4 lg:p-6">
           <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
         </main>
       </SidebarInset>
