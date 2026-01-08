@@ -54,9 +54,17 @@ export function Header() {
           )}
         </div>
 
-        <button className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu">
-          {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        {/* Mobile Navigation */}
+        <div className="flex items-center gap-3 md:hidden">
+          {isSignedIn && <UserNav />}
+          <button 
+            className="flex items-center justify-center" 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
       </div>
 
       {mobileMenuOpen && (
@@ -90,12 +98,14 @@ export function Header() {
             >
               Contact
             </Link>
-            <div className="flex flex-col gap-2 pt-2">
-              <Button variant="ghost" size="sm">
-                Sign In
-              </Button>
-              <Button size="sm">Get Started</Button>
-            </div>
+            {!isSignedIn && (
+              <div className="flex flex-col gap-2 pt-2">
+                <Button variant="ghost" size="sm">
+                  Sign In
+                </Button>
+                <Button size="sm">Get Started</Button>
+              </div>
+            )}
           </nav>
         </div>
       )}
