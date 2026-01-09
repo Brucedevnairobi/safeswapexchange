@@ -41,7 +41,7 @@ export function Header() {
           </Link>
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="items-center gap-3 md:flex">
           {isSignedIn ? (
             <UserNav />
           ) : (
