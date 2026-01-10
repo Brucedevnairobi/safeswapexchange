@@ -1,3 +1,5 @@
+'use client'
+
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { DollarSign, ArrowUpRight, Clock, CheckCircle, AlertCircle, TrendingUp, Plus, HelpCircle } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
