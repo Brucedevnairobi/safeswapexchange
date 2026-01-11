@@ -41,18 +41,7 @@ export function Header() {
           </Link>
         </nav>
 
-        <div className="items-center gap-3 md:flex">
-          {isSignedIn ? (
-            <UserNav />
-          ) : (
-            <>
-              <Button variant="ghost" size="sm">
-                Sign In
-              </Button>
-              <Button size="sm">Get Started</Button>
-            </>
-          )}
-        </div>
+        
 
         {/* Mobile Navigation */}
         <div className="flex items-center gap-3 md:hidden">
