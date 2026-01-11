@@ -202,11 +202,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               </div>
             </div>
 
-            <div className="md:hidden flex-1 flex justify-center">
-              <Button variant="ghost" size="icon" className="h-9 w-9">
-                <Search className="h-4 w-4" />
-              </Button>
-            </div>
+           
 
             <div className="flex items-center gap-1 md:gap-2">
               <Button variant="ghost" size="icon" className="h-9 w-9 md:h-10 md:w-10 relative">
