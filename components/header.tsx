@@ -4,11 +4,16 @@ import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Shield } from "lucide-react"
-import { UserNav } from "./user-nav"
+import { UserNav } from "@/components/user-nav"
+import { AuthModal } from "@/components/auth-modal"
+import { useAuth } from "@/hooks/use-auth"
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const isSignedIn = true
+  const [authModalOpen, setAuthModalOpen] = useState(false)
+  const { user } = useAuth()
+
+  const isSignedIn = !!user
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -41,19 +46,24 @@ export function Header() {
           </Link>
         </nav>
 
-        
-
-        {/* Mobile Navigation */}
-        <div className="flex items-center gap-3 md:hidden">
-          {isSignedIn && <UserNav />}
-          <button 
-            className="flex items-center justify-center" 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+        <div className="hidden items-center gap-3 md:flex">
+          {isSignedIn ? (
+            <UserNav />
+          ) : (
+            <>
+              <Button variant="ghost" size="sm" onClick={() => setAuthModalOpen(true)}>
+                Sign In
+              </Button>
+              <Button size="sm" onClick={() => setAuthModalOpen(true)}>
+                Get Started
+              </Button>
+            </>
+          )}
         </div>
+
+        <button className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu">
+          {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
       </div>
 
       {mobileMenuOpen && (
@@ -87,17 +97,28 @@ export function Header() {
             >
               Contact
             </Link>
-            {!isSignedIn && (
-              <div className="flex flex-col gap-2 pt-2">
-                <Button variant="ghost" size="sm">
-                  Sign In
-                </Button>
-                <Button size="sm">Get Started</Button>
-              </div>
-            )}
+            <div className="flex flex-col gap-2 pt-2">
+              {isSignedIn ? (
+                <div className="flex items-center justify-between border-t border-border pt-4">
+                  <span className="text-sm font-medium">My Account</span>
+                  <UserNav />
+                </div>
+              ) : (
+                <>
+                  <Button variant="ghost" size="sm" onClick={() => setAuthModalOpen(true)} className="w-full">
+                    Sign In
+                  </Button>
+                  <Button size="sm" onClick={() => setAuthModalOpen(true)} className="w-full">
+                    Get Started
+                  </Button>
+                </>
+              )}
+            </div>
           </nav>
         </div>
       )}
+
+      <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
     </header>
   )
 }
