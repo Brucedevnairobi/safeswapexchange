@@ -1,11 +1,10 @@
-'use client'
-
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { DollarSign, ArrowUpRight, Clock, CheckCircle, AlertCircle, TrendingUp, Plus, HelpCircle } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Cell, Pie, PieChart } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { WithdrawalModal } from "@/components/withdrawal-modal"
 
 export default function DashboardPage() {
   // Mock data - replace with real data from API/database
@@ -45,38 +44,40 @@ export default function DashboardPage() {
   ]
 
   const recentTransactions = [
-    {
-      id: "TXN-2024-001",
-      item: "MacBook Pro M3",
-      amount: "KES 185,000",
-      status: "pending",
-      party: "buyer",
-      date: "2024-01-03",
-    },
-    {
-      id: "TXN-2024-002",
-      item: "Toyota Vitz 2018",
-      amount: "KES 950,000",
-      status: "in-progress",
-      party: "seller",
-      date: "2024-01-02",
-    },
-    {
-      id: "TXN-2024-003",
-      item: "Plot - Kiambu",
-      amount: "KES 2,500,000",
-      status: "completed",
-      party: "buyer",
-      date: "2024-01-01",
-    },
-    {
-      id: "TXN-2024-004",
-      item: "iPhone 15 Pro",
-      amount: "KES 145,000",
-      status: "completed",
-      party: "seller",
-      date: "2023-12-30",
-    },
+    [
+      {
+        id: "TXN-2024-001",
+        item: "MacBook Pro M3",
+        amount: "KES 185,000",
+        status: "pending",
+        party: "buyer",
+        date: "2024-01-03",
+      },
+      {
+        id: "TXN-2024-002",
+        item: "Toyota Vitz 2018",
+        amount: "KES 950,000",
+        status: "in-progress",
+        party: "seller",
+        date: "2024-01-02",
+      },
+      {
+        id: "TXN-2024-003",
+        item: "Plot - Kiambu",
+        amount: "KES 2,500,000",
+        status: "completed",
+        party: "buyer",
+        date: "2024-01-01",
+      },
+      {
+        id: "TXN-2024-004",
+        item: "iPhone 15 Pro",
+        amount: "KES 145,000",
+        status: "completed",
+        party: "seller",
+        date: "2023-12-30",
+      },
+    ],
   ]
 
   const volumeData = [
@@ -115,6 +116,21 @@ export default function DashboardPage() {
         <h1 className="font-poppins text-3xl font-bold text-foreground">Dashboard Overview</h1>
         <p className="text-muted-foreground">Track your escrow transactions and account activity</p>
       </div>
+
+      {/* Available Balance Card */}
+      <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg">Available Balance</CardTitle>
+          <CardDescription>Funds ready to withdraw</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <p className="text-4xl font-bold text-primary">KES 456,780</p>
+            <p className="text-xs text-muted-foreground mt-1">Total: KES 1,234,500</p>
+          </div>
+          <WithdrawalModal availableBalance={456780} />
+        </CardContent>
+      </Card>
 
       {/* Stats Grid */}
       <div className="grid gap-3 md:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
