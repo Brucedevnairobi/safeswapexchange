@@ -45,7 +45,7 @@ export default function DashboardPage() {
     },
   ]
 
-  const recentTransactions = [
+  const recentTransactions = 
     [
       {
         id: "TXN-2024-001",
@@ -79,8 +79,8 @@ export default function DashboardPage() {
         party: "seller",
         date: "2023-12-30",
       },
-    ],
-  ]
+    ]
+  
 
   const volumeData = [
     { name: "Jan", total: 450000 },
