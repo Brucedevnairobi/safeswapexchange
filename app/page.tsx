@@ -6,6 +6,7 @@ import { HowItWorks } from "@/components/how-it-works"
 import { WhyChooseUs } from "@/components/why-choose-us"
 import { CTA } from "@/components/cta"
 import { Footer } from "@/components/footer"
+import { ContactSection } from "@/components/contact-section"
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       <HowItWorks />
       <WhyChooseUs />
       <CTA />
+      <ContactSection />
       <Footer />
     </main>
   )
