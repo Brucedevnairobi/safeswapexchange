@@ -1,6 +1,7 @@
 "use client"
 
-import { createContext, useContext, useState, type ReactNode } from "react"
+import { createContext, useContext, useState, useCallback, type ReactNode } from "react"
+import { useRouter } from "next/navigation"
 
 interface User {
   name: string
@@ -18,20 +19,22 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
+  const router = useRouter()
 
-  const login = (email: string) => {
+  const login = useCallback((email: string) => {
     setUser({
       name: email.split("@")[0],
       email: email,
       image: undefined,
     })
     console.log("[v0] User logged in:", email)
-  }
+  }, [])
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setUser(null)
-    console.log("[v0] User logged out")
-  }
+    console.log("[v0] User logged out, redirecting to home")
+    router.push("/")
+  }, [router])
 
   return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>
 }

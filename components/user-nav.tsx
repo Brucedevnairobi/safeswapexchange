@@ -13,6 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { User, LayoutDashboard, History, Settings, HelpCircle, LogOut } from "lucide-react"
 import Link from "next/link"
+import { useAuth } from "@/hooks/use-auth" // added auth hook import
 
 interface UserNavProps {
   user?: {
@@ -23,6 +24,8 @@ interface UserNavProps {
 }
 
 export function UserNav({ user }: UserNavProps) {
+  const { logout } = useAuth() // get logout function from auth context
+
   // Default user data for demonstration
   const userData = user || {
     name: "John Doe",
@@ -41,8 +44,7 @@ export function UserNav({ user }: UserNavProps) {
   }
 
   const handleLogout = () => {
-    // TODO: Implement actual logout logic
-    console.log("[v0] User logging out")
+    logout()
   }
 
   return (
@@ -51,9 +53,7 @@ export function UserNav({ user }: UserNavProps) {
         <Button variant="ghost" className="relative h-10 w-10 rounded-full">
           <Avatar className="h-10 w-10">
             <AvatarImage src={userData.image || "/placeholder.svg"} alt={userData.name} />
-            <AvatarFallback className="bg-primary text-primary-foreground">
-              {getInitials(userData.name)}
-            </AvatarFallback>
+            <AvatarFallback className="bg-primary text-primary-foreground">{getInitials(userData.name)}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
@@ -75,6 +75,18 @@ export function UserNav({ user }: UserNavProps) {
               <LayoutDashboard className="mr-2 h-4 w-4" />
               <span>Dashboard</span>
             </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <History className="mr-2 h-4 w-4" />
+            <span>Transaction History</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Settings className="mr-2 h-4 w-4" />
+            <span>Settings</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <HelpCircle className="mr-2 h-4 w-4" />
+            <span>Help Center</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
