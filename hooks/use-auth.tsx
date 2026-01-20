@@ -30,10 +30,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const storedUser = localStorage.getItem("safeswap_user")
       if (storedUser) {
         setUser(JSON.parse(storedUser))
-        console.log("[v0] User restored from localStorage")
       }
     } catch (error) {
-      console.error("[v0] Failed to restore user from localStorage:", error)
+      console.error("Failed to restore user from localStorage:", error)
       localStorage.removeItem("safeswap_user")
     }
     setIsHydrated(true)
@@ -51,7 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       clearTimeout(inactivityTimer)
       
       inactivityTimer = setTimeout(() => {
-        console.log("[v0] User inactive for 15 minutes, logging out")
+        console.log("Heyy, youve been inactive for 15 minutes, logging out")
         setUser(null)
         localStorage.removeItem("safeswap_user")
         router.push("/")
@@ -96,7 +95,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = useCallback(() => {
     setUser(null)
     localStorage.removeItem("safeswap_user")
-    console.log("[v0] User logged out, redirecting to home")
+    console.log("User logged out, redirecting to home")
     router.push("/")
   }, [router])
 
