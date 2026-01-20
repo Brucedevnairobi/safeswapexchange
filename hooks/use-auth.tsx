@@ -17,6 +17,8 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
+const INACTIVITY_TIMEOUT = 15 * 60 * 1000 // 15 minutes in milliseconds
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [isHydrated, setIsHydrated] = useState(false)
@@ -36,6 +38,49 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     setIsHydrated(true)
   }, [])
+
+  // Set up inactivity timeout
+  useEffect(() => {
+    if (!user) return
+
+    let inactivityTimer: NodeJS.Timeout
+    let lastActivityTime = Date.now()
+
+    const resetInactivityTimer = () => {
+      lastActivityTime = Date.now()
+      clearTimeout(inactivityTimer)
+      
+      inactivityTimer = setTimeout(() => {
+        console.log("[v0] User inactive for 15 minutes, logging out")
+        setUser(null)
+        localStorage.removeItem("safeswap_user")
+        router.push("/")
+      }, INACTIVITY_TIMEOUT)
+    }
+
+    // Activity event listeners
+    const activityEvents = ["mousedown", "keydown", "scroll", "touchstart", "click"]
+    
+    const handleActivity = () => {
+      resetInactivityTimer()
+    }
+
+    // Initialize timer
+    resetInactivityTimer()
+
+    // Add event listeners
+    activityEvents.forEach((event) => {
+      document.addEventListener(event, handleActivity)
+    })
+
+    // Cleanup
+    return () => {
+      clearTimeout(inactivityTimer)
+      activityEvents.forEach((event) => {
+        document.removeEventListener(event, handleActivity)
+      })
+    }
+  }, [user, router])
 
   const login = useCallback((email: string) => {
     const newUser = {
