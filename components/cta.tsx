@@ -43,7 +43,7 @@ export function CTA() {
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+           {/*   <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                   <DialogTitle className="font-poppins text-2xl">Create New Transaction</DialogTitle>
                   <DialogDescription>
@@ -51,7 +51,7 @@ export function CTA() {
                   </DialogDescription>
                 </DialogHeader>
                 <TransactionForm />
-              </DialogContent>
+              </DialogContent>*/}
             </Dialog>
             <Button size="lg" variant="outline" onClick={handleContactClick}>
               Contact Sales
