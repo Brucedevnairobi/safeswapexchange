@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Mail, Phone, MapPin, MessageSquare } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { useState } from "react";
+import { Mail, Phone, MapPin, MessageSquare } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export function ContactSection() {
   const [formState, setFormState] = useState({
@@ -14,24 +14,34 @@ export function ContactSection() {
     subject: "",
     message: "",
     category: "support",
-  })
-  const [submitted, setSubmitted] = useState(false)
+  });
+  const [submitted, setSubmitted] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormState((prev) => ({ ...prev, [name]: value }))
-  }
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormState((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     // TODO: Integrate with backend API for form submission
-    console.log("Form submitted:", formState)
-    setSubmitted(true)
+    console.log("Form submitted:", formState);
+    setSubmitted(true);
     setTimeout(() => {
-      setFormState({ name: "", email: "", subject: "", message: "", category: "support" })
-      setSubmitted(false)
-    }, 3000)
-  }
+      setFormState({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+        category: "support",
+      });
+      setSubmitted(false);
+    }, 3000);
+  };
 
   return (
     <section id="contact" className="py-20 lg:py-28 bg-muted/30">
@@ -42,8 +52,8 @@ export function ContactSection() {
             Get in Touch
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Have questions about Safeswap? Our team is here to help. Reach out anytime and we'll get back to you within
-            24 hours.
+            Have questions about Safeswap? Our team is here to help. Reach out
+            anytime and we'll get back to you within 24 hours.
           </p>
         </div>
 
@@ -56,14 +66,22 @@ export function ContactSection() {
                 <Mail className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h3 className="font-poppins font-semibold text-foreground mb-1">Email</h3>
+                <h3 className="font-poppins font-semibold text-foreground mb-1">
+                  Email
+                </h3>
                 <p className="text-muted-foreground text-sm">
-                  <a href="mailto:support@safeswap.com" className="hover:text-primary transition-colors">
+                  <a
+                    href="mailto:support@safeswap.com"
+                    className="hover:text-primary transition-colors"
+                  >
                     support@safeswap.com
                   </a>
                 </p>
                 <p className="text-muted-foreground text-sm">
-                  <a href="mailto:sales@safeswap.com" className="hover:text-primary transition-colors">
+                  <a
+                    href="mailto:sales@safeswap.com"
+                    className="hover:text-primary transition-colors"
+                  >
                     sales@safeswap.com
                   </a>
                 </p>
@@ -76,13 +94,20 @@ export function ContactSection() {
                 <Phone className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h3 className="font-poppins font-semibold text-foreground mb-1">Phone</h3>
+                <h3 className="font-poppins font-semibold text-foreground mb-1">
+                  Phone
+                </h3>
                 <p className="text-muted-foreground text-sm">
-                  <a href="tel:+254700000000" className="hover:text-primary transition-colors">
-                    +254 700 000 000
+                  <a
+                    href="tel:+254700000000"
+                    className="hover:text-primary transition-colors"
+                  >
+                    +254 736368320
                   </a>
                 </p>
-                <p className="text-muted-foreground text-sm">Mon - Fri, 9 AM - 6 PM EAT</p>
+                <p className="text-muted-foreground text-sm">
+                  24/7/365 - Always Available
+                </p>
               </div>
             </div>
 
@@ -92,7 +117,9 @@ export function ContactSection() {
                 <MapPin className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h3 className="font-poppins font-semibold text-foreground mb-1">Office</h3>
+                <h3 className="font-poppins font-semibold text-foreground mb-1">
+                  Office
+                </h3>
                 <p className="text-muted-foreground text-sm">
                   Nairobi Innovation Hub
                   <br />
@@ -107,8 +134,12 @@ export function ContactSection() {
                 <MessageSquare className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h3 className="font-poppins font-semibold text-foreground mb-1">Response Time</h3>
-                <p className="text-muted-foreground text-sm">We typically respond within 24 hours</p>
+                <h3 className="font-poppins font-semibold text-foreground mb-1">
+                  Response Time
+                </h3>
+                <p className="text-muted-foreground text-sm">
+                  We typically respond within 24 hours
+                </p>
               </div>
             </div>
           </div>
@@ -170,13 +201,19 @@ export function ContactSection() {
               className="w-full px-4 py-3 rounded-lg border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
             />
 
-            <Button type="submit" size="lg" className="w-full sm:w-auto" disabled={submitted}>
+            <Button
+              type="submit"
+              size="lg"
+              className="w-full sm:w-auto"
+              disabled={submitted}
+            >
               {submitted ? "Message Sent!" : "Send Message"}
             </Button>
 
             {submitted && (
               <p className="text-sm text-primary font-medium">
-                Thank you! We've received your message and will get back to you soon.
+                Thank you! We've received your message and will get back to you
+                soon.
               </p>
             )}
           </form>
@@ -184,23 +221,37 @@ export function ContactSection() {
 
         {/* Support Channels */}
         <div className="bg-primary/5 border border-primary/20 rounded-lg p-8">
-          <h3 className="font-poppins text-lg font-semibold text-foreground mb-4">Other Ways to Reach Us</h3>
+          <h3 className="font-poppins text-lg font-semibold text-foreground mb-4">
+            Other Ways to Reach Us
+          </h3>
           <div className="grid sm:grid-cols-3 gap-6">
             <div>
-              <p className="text-sm font-medium text-foreground mb-2">Live Chat</p>
-              <p className="text-sm text-muted-foreground">Available during business hours for instant support</p>
+              <p className="text-sm font-medium text-foreground mb-2">
+                Live Chat
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Available during business hours for instant support
+              </p>
             </div>
             <div>
-              <p className="text-sm font-medium text-foreground mb-2">Help Center</p>
-              <p className="text-sm text-muted-foreground">Browse FAQs and knowledge base articles anytime</p>
+              <p className="text-sm font-medium text-foreground mb-2">
+                Help Center
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Browse FAQs and knowledge base articles anytime
+              </p>
             </div>
             <div>
-              <p className="text-sm font-medium text-foreground mb-2">Support Tickets</p>
-              <p className="text-sm text-muted-foreground">Track your support requests in your dashboard</p>
+              <p className="text-sm font-medium text-foreground mb-2">
+                Support Tickets
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Track your support requests in your dashboard
+              </p>
             </div>
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }
