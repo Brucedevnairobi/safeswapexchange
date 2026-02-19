@@ -178,6 +178,7 @@ export function ContactSection() {
                 className="bg-background"
               />
               <select
+                aria-label="Category"
                 name="category"
                 value={formState.category}
                 onChange={handleInputChange}

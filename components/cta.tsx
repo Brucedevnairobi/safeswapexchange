@@ -17,7 +17,7 @@ export function CTA() {
   };
 
   return (
-    <section className="border-y border-border bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 py-20 lg:py-28">
+    <section className="border-y border-border bg-linear-to-br from-primary/5 via-secondary/5 to-accent/5 py-20 lg:py-28">
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="font-poppins text-3xl font-bold tracking-tight text-balance text-foreground lg:text-4xl">

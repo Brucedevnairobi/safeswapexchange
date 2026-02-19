@@ -16,7 +16,7 @@ import { useState } from "react"
 export function Hero() {
   const [open, setOpen] = useState(false)
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-background to-muted/20 py-20 lg:py-28">
+    <section className="relative overflow-hidden bg-linear-to-b from-background to-muted/20 py-20 lg:py-28">
       <div className="container mx-auto px-4">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="flex flex-col justify-center space-y-6">
